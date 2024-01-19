@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <title>Muebles (Listar)</title>
+</head>
+<body>
+<div th:replace="~{cabecera::cabecera}"></div>
+<h1>Detalles</h1>
+<ul>
+    <li th:text="${'Id: '+producto.getProduct_id()}"></li>
+    <li th:text="${'Nombre: '+producto.getProduct_name()}"></li>
+    <li th:text="${'Precio: '+producto.getProduct_price()}"></li>
+    <li th:text="${'Stock: '+producto.getProduct_stock()}"></li>
+    <li th:text="'Municipio: '+${municipio.getNombre()}"></li>
+    <li th:text="${'Provincia: '+provincia.getNombre()}"></li>
+    <li> <span th:text="Imagen"></span><br>
+        <img th:if="${producto.imagenExiste()}" th:src="@{'/img/'+${producto.getProduct_picture()}}" width="500" height="300">
+        <img th:unless="${producto.imagenExiste()}" th:src="'/img/no-foto.avif'" width="500" height="300">
+    </li>
+</ul>
+<a th:href="'/productos'">Volver al listado</a>
+</body>
+</html>
