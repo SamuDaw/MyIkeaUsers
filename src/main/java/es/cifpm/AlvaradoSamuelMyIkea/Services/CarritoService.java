@@ -13,11 +13,11 @@ public class CarritoService {
     }
 
     public void addMuebleCarrito(Producto producto) {
-        carrito.getCarrito().add(producto);
+        carrito.getProductos().add(producto);
     }
 
     public void eliminarMuebleCarrito(Producto producto) {
-        carrito.getCarrito().remove(producto);
+        carrito.getProductos().remove(producto);
     }
 }
 

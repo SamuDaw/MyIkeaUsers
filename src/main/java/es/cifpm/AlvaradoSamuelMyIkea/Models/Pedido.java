@@ -28,6 +28,10 @@ public class Pedido {
     )
     private List<Producto> productos;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
 
     public Pedido() {
         this.productos = new ArrayList<>();

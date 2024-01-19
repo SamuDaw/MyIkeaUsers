@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
+import java.util.List;
+
 @Entity
 @Table(name = "productoffer")
 public class Producto {
@@ -26,6 +28,9 @@ public class Producto {
 
     @Column(name = "product_stock",nullable = true)
     private int product_stock;
+
+    @ManyToMany(mappedBy = "productos")
+    private List<Carrito> carritos;
 
     public Producto(int product_id) {
         this.product_id = product_id;
