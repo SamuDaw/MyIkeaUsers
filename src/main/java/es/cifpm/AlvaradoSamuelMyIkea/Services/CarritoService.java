@@ -22,10 +22,14 @@ public class CarritoService {
         this.carritoRepository = carritoRepository;
     }
 
-    public List<Producto> getCarrito(Long carrito_id) {
-       Optional<Carrito> carritoEncontrado = carritoRepository.findAll().stream().filter(carrito -> Objects.equals(carrito.getCarrito_id(), carrito_id)).findFirst();
-       List<Producto> carrito = carritoEncontrado.get().getProductos();
+    public Carrito getCarrito(String username) {
+       Optional<Carrito> carritoEncontrado = carritoRepository.findAll().stream().filter(carrito -> Objects.equals(carrito.getUsuario().getUsername(), username)).findFirst();
+       Carrito carrito = carritoEncontrado.get();
        return carrito;
+    }
+
+    public void guardarCarrito(Carrito carrito){
+        carritoRepository.save(carrito);
     }
 
 /*    public void addMuebleCarrito(Producto producto, Long carrito_id) {

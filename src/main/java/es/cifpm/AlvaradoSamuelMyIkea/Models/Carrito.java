@@ -13,13 +13,8 @@ public class Carrito {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long carrito_id;
 
-    @ManyToMany
-    @JoinTable(
-            name = "user_carrito",
-            joinColumns = @JoinColumn(name = "carrito_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
-    private List<User> usuarios;
+    @OneToOne(mappedBy = "carrito")
+    private User usuario;
 
     @ManyToMany
     @JoinTable(
@@ -41,12 +36,12 @@ public class Carrito {
         this.carrito_id = carrito_id;
     }
 
-    public List<User> getUsuarios() {
-        return usuarios;
+    public User getUsuario() {
+        return usuario;
     }
 
-    public void setUsuarios(List<User> usuarios) {
-        this.usuarios = usuarios;
+    public void setUsuario(User usuarios) {
+        this.usuario = usuarios;
     }
 
     public List<Producto> getProductos() {

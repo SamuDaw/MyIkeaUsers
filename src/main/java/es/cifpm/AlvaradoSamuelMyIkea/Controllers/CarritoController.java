@@ -1,9 +1,12 @@
 package es.cifpm.AlvaradoSamuelMyIkea.Controllers;
 
+import es.cifpm.AlvaradoSamuelMyIkea.Models.Carrito;
 import es.cifpm.AlvaradoSamuelMyIkea.Models.Producto;
 import es.cifpm.AlvaradoSamuelMyIkea.Services.CarritoService;
 import es.cifpm.AlvaradoSamuelMyIkea.Services.MuebleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,10 +29,14 @@ public class CarritoController {
 
     @GetMapping
     public String verCarrito(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String nombre = auth.getName();
         float precioTotal = 0;
-        for (Producto producto : MuebleService.getCarrito()) {
+        Carrito carrito = carritoService.getCarrito(nombre);
+        for (Producto producto : carrito.getProductos()) {
             precioTotal += producto.getProduct_price();
         }
+        model.addAttribute("nombre",nombre);
         model.addAttribute("carrito", MuebleService.getCarrito());
         model.addAttribute("precioTotal", precioTotal);
         return "/carrito";
@@ -38,9 +45,19 @@ public class CarritoController {
     @GetMapping("/comprar/{id}")
     public String comprarMueble(Model model, @PathVariable int id){
         Optional<Producto> muebleEncontrado = muebleService.getListaMuebles().stream().filter(mueble1 -> mueble1.getProduct_id() == id).findFirst();
+
         if (muebleEncontrado.isPresent()){
+            //Sacar el producto
             Producto producto = muebleEncontrado.get();
-            MuebleService.agregarMuebleCarrito(producto);
+            //Coger el username del user autenticado
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            String usuario = auth.getName();
+            //Coger el carrito de dicho usuario
+            Carrito carritoUsuario = carritoService.getCarrito(usuario);
+
+            //añadir el producto al carrito y guardarlo
+            carritoUsuario.getProductos().add(producto);
+            carritoService.guardarCarrito(carritoUsuario);
             return "redirect:/carrito";
         }else {
             return "redirect:productos/";

@@ -1,5 +1,6 @@
 package es.cifpm.AlvaradoSamuelMyIkea;
 
+import es.cifpm.AlvaradoSamuelMyIkea.Models.Carrito;
 import es.cifpm.AlvaradoSamuelMyIkea.Models.Role;
 import es.cifpm.AlvaradoSamuelMyIkea.Models.User;
 import es.cifpm.AlvaradoSamuelMyIkea.Repositorios.RoleRepository;
@@ -56,12 +57,27 @@ public class AlvaradoSamuelMyIkeaApplication {
 			adminUser.setPassword(passwordEncoder.encode("user"));
 			adminUser.setRoles(Arrays.asList(roleRepository.findByName("ROLE_USER").orElse(null)));
 			userService.saveUser(adminUser);
+			// Crear un nuevo carrito para el usuario
+			Carrito carritoUsuario = new Carrito();
+			carritoUsuario.setUsuario(adminUser);
+
+			// Asignar el carrito al usuario
+			adminUser.setCarrito(carritoUsuario);
+
+			userService.saveUser(adminUser);
 		}
 		if (userService.findByUsername("manager").isEmpty()) {
 			User adminUser = new User();
 			adminUser.setUsername("manager");
 			adminUser.setPassword(passwordEncoder.encode("manager"));
 			adminUser.setRoles(Arrays.asList(roleRepository.findByName("ROLE_MANAGER").orElse(null)));
+			// Crear un nuevo carrito para el usuario
+			Carrito carritoUsuario = new Carrito();
+			carritoUsuario.setUsuario(adminUser);
+
+			// Asignar el carrito al usuario
+			adminUser.setCarrito(carritoUsuario);
+
 			userService.saveUser(adminUser);
 		}
 		if (userService.findByUsername("admin").isEmpty()) {
@@ -69,6 +85,13 @@ public class AlvaradoSamuelMyIkeaApplication {
 			adminUser.setUsername("admin");
 			adminUser.setPassword(passwordEncoder.encode("admin"));
 			adminUser.setRoles(Arrays.asList(roleRepository.findByName("ROLE_ADMIN").orElse(null)));
+			// Crear un nuevo carrito para el usuario
+			Carrito carritoUsuario = new Carrito();
+			carritoUsuario.setUsuario(adminUser);
+
+			// Asignar el carrito al usuario
+			adminUser.setCarrito(carritoUsuario);
+
 			userService.saveUser(adminUser);
 		}
 	}

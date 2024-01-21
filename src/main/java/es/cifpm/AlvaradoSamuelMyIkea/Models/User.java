@@ -33,8 +33,9 @@ public class User implements UserDetails {
     )
     private List<Role> roles;
 
-    @ManyToMany(mappedBy = "usuarios", cascade = CascadeType.ALL)
-    private List<Carrito> carritos;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "carrito_id", referencedColumnName = "carrito_id")
+    private Carrito carrito;
 
 
     //Getters y Setters
@@ -105,4 +106,11 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
+    public Carrito getCarrito() {
+        return carrito;
+    }
+
+    public void setCarrito(Carrito carrito) {
+        this.carrito = carrito;
+    }
 }
