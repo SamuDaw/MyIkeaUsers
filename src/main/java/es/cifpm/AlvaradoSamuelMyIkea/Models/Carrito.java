@@ -33,16 +33,24 @@ public class Carrito {
         this.productos = new ArrayList<>();
     }
 
+    public Long getCarrito_id() {
+        return carrito_id;
+    }
+
+    public void setCarrito_id(Long carrito_id) {
+        this.carrito_id = carrito_id;
+    }
+
+    public List<User> getUsuarios() {
+        return usuarios;
+    }
+
+    public void setUsuarios(List<User> usuarios) {
+        this.usuarios = usuarios;
+    }
+
     public List<Producto> getProductos() {
         return productos;
-    }
-
-    public void addMuebleCarrito(Producto producto){
-        getProductos().add(producto);
-    }
-
-    public void eliminarMuebleCarrito(Producto producto){
-        getProductos().remove(producto);
     }
 
     public void setProductos(List<Producto> productos) {

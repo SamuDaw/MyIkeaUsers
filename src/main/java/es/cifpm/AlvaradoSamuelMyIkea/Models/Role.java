@@ -18,6 +18,12 @@ public class Role {
     @ManyToMany(mappedBy = "roles")
     private List<User> users;
 
+    //El contrudctor vacio es requerido por JPA NO OLVIDAR
+    public Role(){};
+    public Role(String roleName) {
+        this.name = roleName;
+    }
+
     //Getters y setters
 
 
