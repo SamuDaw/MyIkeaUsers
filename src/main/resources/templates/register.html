@@ -6,16 +6,25 @@
     <title>Registro MyIkea</title>
 </head>
 <body>
-<div th:replace="~{cabecera::cabecera}"></div>
-<div class="container">
+<div th:replace="~{cabecera::cabecera}"></div><div class="container">
     <div class="row col-md-8 offset-md-2">
         <div class="card">
             <div class="card-header">
-                <h2 class="text-center">Registration</h2>
+                <h2 class="text-center">Registro</h2>
             </div>
             <div th:if="${param.success}">
                 <div class="alert alert-info">
-                    You have successfully registered our app!
+                    Te has registrado correctamente en MyIkea!
+                </div>
+            </div>
+            <div th:if="${param.error}">
+                <div class="alert alert-warning">
+                    Error en los campos introducidos
+                </div>
+            </div>
+            <div th:if="${param.existe}">
+                <div class="alert alert-warning">
+                    El Nombre de Usuario o Email ya está registrado en la web.
                 </div>
             </div>
             <div class="card-body">
@@ -27,26 +36,40 @@
                 >
 
                     <div class="form-group mb-3">
-                        <label class="form-label">Username</label>
+                        <label class="form-label">Nombre de Usuario</label>
                         <input
                                 class="form-control"
                                 id="username"
                                 name="username"
-                                placeholder="Username address"
+                                placeholder="Usuario"
                                 th:field="*{username}"
                                 type="username"
                         />
                         <p th:errors = "*{username}" class="text-danger"
                            th:if="${#fields.hasErrors('username')}"></p>
                     </div>
+                    <div class="form-group mb-3">
+                        <label class="form-label">Correo electrónico</label>
+                        <input
+                                class="form-control"
+                                id="email"
+                                name="email"
+                                placeholder="E-mail"
+                                th:field="*{email}"
+                                type="email"
+                        />
+                        <p th:errors = "*{email}" class="text-danger"
+                           th:if="${#fields.hasErrors('email')}"></p>
+                    </div>
+
 
                     <div class="form-group mb-3">
-                        <label class="form-label">Password</label>
+                        <label class="form-label">Contraseña</label>
                         <input
                                 class="form-control"
                                 id="password"
                                 name="password"
-                                placeholder="Enter password"
+                                placeholder="Contraseña"
                                 th:field="*{password}"
                                 type="password"
                         />
@@ -55,7 +78,7 @@
                     </div>
                     <div class="form-group">
                         <input class="btn btn-primary" type="submit" value="Registrarse"></input>
-                        <span>Already registered? <a th:href="@{/login}">Login here</a></span>
+                        <span>¿Ya está registrado? <a th:href="@{/login}">Haz login aquí</a></span>
                     </div>
                 </form>
             </div>

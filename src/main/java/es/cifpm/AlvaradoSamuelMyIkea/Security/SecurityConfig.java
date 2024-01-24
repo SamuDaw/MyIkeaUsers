@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -23,15 +23,38 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests()
-                    .requestMatchers("/index").permitAll()
+                    .requestMatchers("/403").permitAll()
+                    .requestMatchers("/").permitAll()
+                    .requestMatchers("/register").permitAll()
+                    .requestMatchers("/register/save").permitAll()
+                    .requestMatchers("/users/**").hasRole("ADMIN")
+                    .requestMatchers("/productos/details/**").hasRole("USER")
+                    .requestMatchers("/pedidos/**").hasRole("USER")
+                    .requestMatchers("/productos/create").hasAnyRole("MANAGER","ADMIN")
+                    .requestMatchers("/productos/editar/**").hasAnyRole("MANAGER","ADMIN")
+                    .requestMatchers("/carrito/**").hasRole("USER")
                     .anyRequest().authenticated()
                 .and()
-                .formLogin().permitAll()
-                .and().build();
+                .formLogin()
+                    .loginPage("/login")
+                    .loginProcessingUrl("/login")
+                    .permitAll()
+                .and()
+                .logout()
+                    .invalidateHttpSession(true)
+                    .clearAuthentication(true)
+                    .logoutUrl("/logout")
+                    .addLogoutHandler(new SecurityContextLogoutHandler())
+                    .deleteCookies("JSESSIONID")
+                    .permitAll()
+                .and()
+                .build();
+
     }
 
     @Autowired
@@ -40,5 +63,6 @@ public class SecurityConfig {
                 .userDetailsService(userDetailsService)
                 .passwordEncoder(passwordEncoder());
     }
+
 }
 

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -56,7 +57,8 @@ public class AlvaradoSamuelMyIkeaApplication {
 			adminUser.setUsername("user");
 			adminUser.setPassword(passwordEncoder.encode("user"));
 			adminUser.setRoles(Arrays.asList(roleRepository.findByName("ROLE_USER").orElse(null)));
-			userService.saveUser(adminUser);
+			adminUser.setEmail(("user@myikea.com"));
+			//userService.saveUser(adminUser);
 			// Crear un nuevo carrito para el usuario
 			Carrito carritoUsuario = new Carrito();
 			carritoUsuario.setUsuario(adminUser);
@@ -71,6 +73,7 @@ public class AlvaradoSamuelMyIkeaApplication {
 			adminUser.setUsername("manager");
 			adminUser.setPassword(passwordEncoder.encode("manager"));
 			adminUser.setRoles(Arrays.asList(roleRepository.findByName("ROLE_MANAGER").orElse(null)));
+			adminUser.setEmail(("manager@myikea.com"));
 			// Crear un nuevo carrito para el usuario
 			Carrito carritoUsuario = new Carrito();
 			carritoUsuario.setUsuario(adminUser);
@@ -85,6 +88,7 @@ public class AlvaradoSamuelMyIkeaApplication {
 			adminUser.setUsername("admin");
 			adminUser.setPassword(passwordEncoder.encode("admin"));
 			adminUser.setRoles(Arrays.asList(roleRepository.findByName("ROLE_ADMIN").orElse(null)));
+			adminUser.setEmail(("admin@myikea.com"));
 			// Crear un nuevo carrito para el usuario
 			Carrito carritoUsuario = new Carrito();
 			carritoUsuario.setUsuario(adminUser);

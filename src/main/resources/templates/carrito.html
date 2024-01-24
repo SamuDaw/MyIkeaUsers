@@ -7,8 +7,7 @@
 </head>
 <body>
 <div th:replace="~{cabecera::cabecera}"></div>
-<h1>Carrito</h1>
-<h2 th:text="${nombre}"></h2>
+<h1 th:text="'Carrito del usuario: '+${nombre}">Carrito</h1>
 <table class="table">
     <thead>
     <tr>
@@ -20,7 +19,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="producto : ${carrito}">
+    <tr th:each="producto : ${productos_carrito}">
         <th th:text="${producto.getProduct_id()}"></th>
         <td th:text="${producto.getProduct_name()}"></td>
         <td th:text="${producto.getProduct_price()}"></td>
@@ -38,14 +37,14 @@
 <h2 th:text="'Precio Total: '+${precioTotal} "></h2>
 <form th:action="@{/pedidos/create}" method="post">
 
-    <input type="hidden" th:each="producto, iterStat : ${carrito}" th:name="'muebles[' + ${iterStat.index} + '].product_id'" th:value="${producto.product_id}">
-    <input type="hidden" th:each="producto, iterStat : ${carrito}" th:name="'muebles[' + ${iterStat.index} + '].product_name'" th:value="${producto.product_name}">
-    <input type="hidden" th:each="producto, iterStat : ${carrito}" th:name="'muebles[' + ${iterStat.index} + '].product_price'" th:value="${producto.product_price}">
-    <input type="hidden" th:each="producto, iterStat : ${carrito}" th:name="'muebleIds[' + ${iterStat.index} + ']'" th:value="${producto.product_id}">
+    <input type="hidden" th:each="producto, iterStat : ${productos_carrito}" th:name="'muebles[' + ${iterStat.index} + '].product_id'" th:value="${producto.product_id}">
+    <input type="hidden" th:each="producto, iterStat : ${productos_carrito}" th:name="'muebles[' + ${iterStat.index} + '].product_name'" th:value="${producto.product_name}">
+    <input type="hidden" th:each="producto, iterStat : ${productos_carrito}" th:name="'muebles[' + ${iterStat.index} + '].product_price'" th:value="${producto.product_price}">
+    <input type="hidden" th:each="producto, iterStat : ${productos_carrito}" th:name="'muebleIds[' + ${iterStat.index} + ']'" th:value="${producto.product_id}">
     <input type="hidden" name="fecha_pedido" th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}">
     <input type="hidden" name="precio_total" th:value="${precioTotal}">
 
-    <button th:if="${carrito.size() > 0}" type="submit" class="btn btn-success">Realizar Pedido</button>
+    <button th:if="${productos_carrito.size() > 0}" type="submit" class="btn btn-success">Realizar Pedido</button>
 </form>
 </body>
 </html>

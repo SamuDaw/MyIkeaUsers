@@ -6,21 +6,20 @@
     <title>Registro MyIkea</title>
 </head>
 <body>
-<div th:replace="~{cabecera::cabecera}"></div>
-<div class="container">
+<div th:replace="~{cabecera::cabecera}"></div><div class="container">
     <div class="row">
         <div class="col-md-6 offset-md-3">
 
             <div th:if="${param.error}">
-                <div class="alert alert-danger">Invalid Email or Password</div>
+                <div class="alert alert-danger">Email o Contraseña incorrecta</div>
             </div>
             <div th:if="${param.logout}">
-                <div class="alert alert-success"> You have been logged out.</div>
+                <div class="alert alert-success">Has cerrado sesión correctamente</div>
             </div>
 
             <div class="card">
                 <div class="card-header">
-                    <h2 class="text-center">Login Form</h2>
+                    <h2 class="text-center">Inicia sesión</h2>
                 </div>
                 <div class="card-body">
                     <form
@@ -30,7 +29,7 @@
                             class="form-horizontal"
                     >
                         <div class="form-group mb-3">
-                            <label class="control-label"> UserName</label>
+                            <label class="control-label"> Nombre de Usuario</label>
                             <input
                                     type="text"
                                     id="username"
@@ -41,19 +40,19 @@
                         </div>
 
                         <div class="form-group mb-3">
-                            <label class="control-label"> Password</label>
+                            <label class="control-label"> Contraseña</label>
                             <input
                                     type="password"
                                     id="password"
                                     name="password"
                                     class="form-control"
-                                    placeholder="Enter password"
+                                    placeholder="***********"
                             />
                         </div>
                         <div class="form-group mb-3">
-                            <button type="submit" class="btn btn-primary" >Submit</button>
-                            <span> Not registered ?
-                                <a th:href="@{/register}">Register/Signup here</a>
+                            <button type="submit" class="btn btn-primary" >Iniciar Sesión</button>
+                            <span>
+                                <a th:href="@{/register}">Registrarse</a>
                             </span>
                         </div>
                     </form>

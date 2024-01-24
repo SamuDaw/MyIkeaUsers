@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">>
 <head>
     <meta charset="UTF-8">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <title>Index Animales (Listar)</title>
 </head>
@@ -12,30 +13,29 @@
         <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" th:href="'/productos'">Muebles</a>
+                    <a class="nav-link" th:href="'/productos'" sec:authorize="isAuthenticated()">Muebles</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="'/pedidos'">Pedidos</a>
+                    <a class="nav-link" th:href="'/pedidos'" th:if="${#authorization.expression('hasRole(''USER'')')}" >Pedidos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="'/carrito'">Carrito</a>
+                    <a class="nav-link" th:href="'/carrito'" th:if="${#authorization.expression('hasRole(''USER'')')}">Carrito</a>
+                </li>
+                <li class="nav-item" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+                    <a class="nav-link" th:href="'/users'">Usuarios</a>
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit" th:href="register">Register</button>
-                <button class="btn btn-outline-warning my-2 my-sm-0" type="submit" th:href="login">Login</button>
+                <a class="btn btn-success my-2 my-sm-0" th:href="'/register'" sec:authorize="!isAuthenticated()" >Register</a>
+                <a class="btn btn-outline-warning my-2 my-sm-0" th:href="'/login'" sec:authorize="!isAuthenticated()" >Login</a>
+                <span class="my-2 my-sm-0 text-light" th:text="${'Usuario: ' +#authentication.name}" sec:authorize="isAuthenticated()"></span>
+                <a class="btn btn-warning my-2 my-sm-0" th:href="'/logout'" sec:authorize="isAuthenticated()" >Cerrar sesión</a>
+
             </form>
             <span class="navbar-text">
     </span>
         </div>
     </nav>
-<!--        <ul class="navbar-nav">
-
-        </ul>-->
-
-<!--    <span class="h-50">Animales</span>
-    <a th:href="'/'" class="btn btn-primary">Inicio</a>
-    <a th:href="'/create'" class="btn btn-primary">Crear Animal</a>-->
 
 </nav>
 </body>

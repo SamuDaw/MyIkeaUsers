@@ -2,6 +2,7 @@ package es.cifpm.AlvaradoSamuelMyIkea.Models;
 
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
@@ -18,6 +19,9 @@ public class User implements UserDetails {
 
     @Column(name = "username", unique = true)
     private String username;
+    @Column(name = "email", unique = true)
+    private String email;
+
 
     @Column(name = "Password")
     private String password;
@@ -79,7 +83,11 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        for (Role role : roles) {
+            authorities.add(new SimpleGrantedAuthority(role.getName()));
+        }
+        return authorities;
     }
 
     public String getPassword() {
@@ -108,6 +116,14 @@ public class User implements UserDetails {
 
     public Carrito getCarrito() {
         return carrito;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public void setCarrito(Carrito carrito) {

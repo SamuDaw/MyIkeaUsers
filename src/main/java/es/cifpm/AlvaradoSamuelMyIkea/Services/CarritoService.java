@@ -32,6 +32,7 @@ public class CarritoService {
         carritoRepository.save(carrito);
     }
 
+
 /*    public void addMuebleCarrito(Producto producto, Long carrito_id) {
         Optional<Carrito> carritoEncontrado = carritoRepository.findAll().stream().filter(carrito -> Objects.equals(carrito.getCarrito_id(), carrito_id)).findFirst();
         List<Producto> carrito = carritoEncontrado.get().getProductos();

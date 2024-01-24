@@ -6,8 +6,7 @@
     <title>Muebles (Listar)</title>
 </head>
 <body>
-<div th:replace="~{cabecera::cabecera}"></div>
-<h1>Detalles</h1>
+<div th:replace="~{cabecera::cabecera}"></div><h1>Detalles</h1>
 <ul>
     <li th:text="${'Id: '+producto.getProduct_id()}"></li>
     <li th:text="${'Nombre: '+producto.getProduct_name()}"></li>

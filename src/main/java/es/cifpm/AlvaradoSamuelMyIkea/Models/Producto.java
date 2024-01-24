@@ -23,11 +23,12 @@ public class Producto {
     @Column(name = "product_picture")
     private String product_picture;
 
-    @Column(name = "id_municipio",nullable = true)
-    private short id_municipio;
-
     @Column(name = "product_stock",nullable = true)
     private int product_stock;
+
+    @ManyToOne
+    @JoinColumn(name = "id_municipio")
+    private Municipio municipio;
 
     @ManyToMany(mappedBy = "productos")
     private List<Carrito> carritos;
@@ -72,12 +73,20 @@ public class Producto {
         this.product_picture = product_picture;
     }
 
-    public short getId_municipio() {
+/*    public short getId_municipio() {
         return id_municipio;
     }
 
     public void setId_municipio(short id_municipio) {
         this.id_municipio = id_municipio;
+    }*/
+
+    public Municipio getMunicipio() {
+        return municipio;
+    }
+
+    public void setMunicipio(Municipio municipio) {
+        this.municipio = municipio;
     }
 
     public int getProduct_stock() {

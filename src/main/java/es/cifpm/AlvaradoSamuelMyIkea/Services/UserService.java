@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -42,9 +43,16 @@ public class UserService implements UserDetailsService {
     public Optional<User> findByUsername(String username){
         return userRepository.findByUsername(username);
     }
+    public Optional<User> findByEmail(String email){
+        return userRepository.findAll().stream().filter(user -> Objects.equals(user.getEmail(), email)).findFirst();
+    }
 
     public List<User> findAllUsers(){
         return userRepository.findAll();
+    }
+
+    public void borrarUsuario(User user) {
+        userRepository.delete(user);
     }
 
 }

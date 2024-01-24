@@ -6,9 +6,8 @@
     <title>Muebles (Listar)</title>
 </head>
 <body>
-<div th:replace="~{cabecera::cabecera}"></div>
-<h1>Listado de Muebles</h1>
-<a th:href="'productos/create'">Crear Nuevo Producto</a>
+<div th:replace="~{cabecera::cabecera}"></div><h1>Listado de Muebles</h1>
+<a th:href="'productos/create'" th:if="${#authorization.expression('hasRole(''ADMIN'')') || #authorization.expression('hasRole(''MANAGER'')')}">Crear Nuevo Producto</a>
 <table class="table">
     <thead>
     <tr>
@@ -28,21 +27,25 @@
         <td th:text="${producto.getProduct_name()}"></td>
         <td th:text="${producto.getProduct_price()}"></td>
         <td th:text="${producto.getProduct_stock()}"></td>
-        <td th:each="municipio : ${listaMunicipios}" th:if="${municipio.getId_municipio() == producto.getId_municipio()}">
+        <td th:text="${producto.municipio.getNombre()}"></td>
+        <td th:text="${producto.municipio.provincia.getNombre()}"></td>
+<!--        <td th:each="municipio : ${listaMunicipios}" th:if="${municipio.getId_municipio() == producto.getId_municipio()}">
             <span th:text="${municipio.getNombre()}"></span>
-        </td>
-        <td th:each="municipio : ${listaMunicipios}" th:if="${municipio.getId_municipio() == producto.getId_municipio()}">
+        </td>-->
+<!--        <td th:each="municipio : ${listaMunicipios}" th:if="${municipio.getId_municipio() == producto.getId_municipio()}">
             <span th:each="provincia : ${listaProvincias}" th:if="${municipio.getId_provincia() == provincia.getId_provincia()}">
                 <span th:text="${provincia.getNombre()}"></span>
             </span>
-        </td>
+        </td>-->
         <td>
             <img th:if="${producto.imagenExiste()}" th:src="@{'/img/'+${producto.getProduct_picture()}}" width="200" height="80">
             <img th:unless="${producto.imagenExiste()}" th:src="'/img/no-foto.avif'" width="200" height="80">
         </td>
         <td>
-            <a class="btn btn-success-online" th:href="'productos/details/'+${producto.getProduct_id()}"><span th:text="Detalles"></span></a>
-            <a class="btn btn-primary" th:href="'carrito/comprar/'+${producto.getProduct_id()}"><span th:text="Comprar"></span></a>
+            <a class="btn btn-success-online" th:href="'productos/details/'+${producto.getProduct_id()}" th:if="${#authorization.expression('hasRole(''USER'')')}"><span th:text="Detalles"></span></a>
+            <a class="btn btn-primary" th:href="'carrito/comprar/'+${producto.getProduct_id()}" th:if="${#authorization.expression('hasRole(''USER'')')}"><span th:text="Comprar"></span></a>
+            <a class="btn btn-warning" th:href="'productos/editar/'+${producto.getProduct_id()}" th:if="${#authorization.expression('hasRole(''MANAGER'')') || #authorization.expression('hasRole(''ADMIN'')')}  "><span th:text="Editar"></span></a>
+
         </td>
 
     </tr>

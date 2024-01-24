@@ -2,6 +2,7 @@ package es.cifpm.AlvaradoSamuelMyIkea.Models;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,7 +19,7 @@ public class Provincia {
     @OneToMany(mappedBy = "provincia",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
-    private List<Municipio> municipios;
+    private List<Municipio> municipios = new ArrayList<>();
 
     public short getId_provincia() {
         return id_provincia;
